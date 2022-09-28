@@ -16,10 +16,6 @@ function App() {
           name: name
         }),
       })
-
-      if(res.status === 200) {
-        console.log('success!')
-      }
     } catch {
       console.log('error')
     }
