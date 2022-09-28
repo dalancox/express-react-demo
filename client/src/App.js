@@ -2,6 +2,28 @@ import React, { useEffect, useState } from 'react'
 
 function App() {
   const [backendData, setBackendData] = useState([{}])
+  const [name, setName] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      let res = await fetch('/form-post', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name
+        }),
+      })
+
+      if(res.status === 200) {
+        console.log('success!')
+      }
+    } catch {
+      console.log('error')
+    }
+  }
 
   useEffect(() => {
     fetch("/api").then(
@@ -15,13 +37,28 @@ function App() {
 
   return (
     <div className="App">
-      {(typeof backendData.users === 'undefined') ? (
-        <p>Loading...</p>
-      ): (
-        backendData.users.map((user, i) => (
-          <p key={i}>{user}</p>
-        ))
-      )}
+      <div>
+        {(typeof backendData.users === 'undefined') ? (
+          <p>Loading...</p>
+        ): (
+          backendData.users.map((user, i) => (
+            <p key={i}>{user}</p>
+          ))
+        )}
+      </div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={name}
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <button type="submit">Submit</button>
+
+        </form>
+      </div>
     </div>
   );
 }
