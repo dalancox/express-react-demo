@@ -5,9 +5,24 @@ function App() {
   const [age, setAge] = useState("");
   const [height, setheight] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-   
+   try {
+    fetch('/users', {
+      method: "post",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        "id": "1",
+        "name": name,
+        "age": age,
+        "height": height
+      })
+    })
+   } catch (error) {
+    console.error(error)
+    console.log('Something went wrong')
+   }
+    
   }
 
   useEffect(() => {

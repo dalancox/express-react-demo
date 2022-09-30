@@ -29,11 +29,12 @@ app.get("/users/:id", async (req, res) => {
 
 app.post("/users", async (req, res) => {
     const user = req.body
+    console.log(user)
     try {
         const NewUser = await addOrUpdateUser(user)
         res.json(NewUser)
     } catch (error) {
-        console.error(err)
+        console.error(error)
         res.status(500).json({err: "Something went wrong"})
     }
 })
